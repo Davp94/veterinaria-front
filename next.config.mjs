@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    env: {
+        port: process.env.PORT
+    }
+};
 
 export default nextConfig;
