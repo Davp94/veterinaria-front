@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "dist/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+, "src/layout/context/layoutcontext.jsx", "src/layout/context/menucontext.jsx", "src/layout/AppConfig.jsx", "src/layout/AppFooter.jsx", "src/layout/AppMenu.jsx", "src/layout/AppMenuitem.jsx", "src/layout/AppSidebar.jsx", "src/layout/AppTopbar.jsx", "src/layout/layout.jsx"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
