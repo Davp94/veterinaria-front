@@ -1,8 +1,8 @@
 'use client';
 // import { PrimeReactProvider } from 'primereact/api';
 'use client'
-import BasicDemo from "@/common/demo.component";
-import FormComponent from "@/common/form.component";
+//import BasicDemo from "@/common/demo.component";
+//import FormComponent from "@/common/form.component";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 export default function MyApp() {
@@ -14,10 +14,10 @@ export default function MyApp() {
       <div className="card flex justify-content-center">
         <Button label="Check" icon="pi pi-check" />
       </div>
-      <BasicDemo title={"Crear"} severity={"danger"} />
+      {/* <BasicDemo title={"Crear"} severity={"danger"} /> */}
 
       {/* CONDITIONAL RENDERING */}
-      {condition && (
+      {/* {condition && (
         <>
           <BasicDemo title={"Compartir"} severity={"sucess"} />
           <BasicDemo title={"Eliminar"} severity={"warning"} />
@@ -33,9 +33,9 @@ export default function MyApp() {
           <BasicDemo title={"CONDITION False"} severity={"sucess"} />
           <BasicDemo title={"CONDITION False2"} severity={"warning"} />
         </div>
-      )}
+      )} */}
       <h1>PROPS HELL</h1>
-      <FormComponent titleButton={"Formulario component"} severityButton={"danger"}/>
+      {/* <FormComponent titleButton={"Formulario component"} severityButton={"danger"}/> */}
       <Button label="TO MAsCOTAS" onClick={()=>router.push(`/mascotas?condition=${condition}`)}/>
     </>
   );
