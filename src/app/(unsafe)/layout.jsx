@@ -5,9 +5,16 @@ export const metadata = {
   
   export default function MainLayout({ children }) {
     return (
-      <>
-        {/* <AuthComponent></AuthComponent> */}
-      </>
+      <html
+      lang='es'
+      suppressHydrationWarning
+    >
+      <head>
+      </head>
+      <body>
+        {children}
+      </body>
+    </html>
     )
   }
   
