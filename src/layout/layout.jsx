@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import HeadlessDemo from "./app-sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -8,10 +9,17 @@ export const metadata = {
 
 export default function DashboardLayout({ children }) {
   return (
-    <div>
-      {/* <div>topbar</div>
-      <div>sidebar</div> */}
-      <div>{children}</div>
+    <div className="w-full h-screen flex flex-column">
+      <div className="flex flex-column bg-gray-300 w-full h-4rem">
+        TOPBAR
+      </div>
+      <div className="flex w-full">
+        <div className="sidebar">Sidebar</div>
+        <div className="flex-grow-1">{children}</div>
+      </div>
+      {/* <div>topbar</div> */}
+      {/* <HeadlessDemo /> */}
+      
       {/* <div>footer</div> */}
     </div>
   );

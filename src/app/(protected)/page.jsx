@@ -1,9 +1,11 @@
 // import { PrimeReactProvider } from 'primereact/api';
-'use strict'
+'use client'
 import BasicDemo from "@/common/demo.component";
 import FormComponent from "@/common/form.component";
+import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 export default function MyApp() {
+  const router = useRouter();
   const condition = true;
   return (
     <>
@@ -33,6 +35,7 @@ export default function MyApp() {
       )}
       <h1>PROPS HELL</h1>
       <FormComponent titleButton={"Formulario component"} severityButton={"danger"}/>
+      <Button label="TO MAsCOTAS" onClick={()=>router.push(`/mascotas?condition=${condition}`)}/>
     </>
   );
 }
