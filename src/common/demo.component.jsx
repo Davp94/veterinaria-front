@@ -1,6 +1,7 @@
 import React from 'react'; 
 import { Button } from 'primereact/button';
 import { Tooltip } from 'primereact/tooltip';
+import { string } from 'prop-types';
 
 export default function BasicDemo({title, severity}) {
     const greeting = 'Hola Mundo';
@@ -11,4 +12,9 @@ export default function BasicDemo({title, severity}) {
             <Button label={title} icon="pi pi-check" severity={severity} />
         </div>
     )
+}
+
+BasicDemo.propTypes = {
+    title: [string, required, match(["sucess", "warning", "info", "danger"])],
+    severity: string
 }
