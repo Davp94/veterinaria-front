@@ -9,14 +9,13 @@ import AppSidebar from './AppSidebar';
 import AppTopbar from './AppTopbar';
 import { LayoutContext } from './context/layoutcontext';
 import { PrimeReactContext } from 'primereact/api';
-import { AppTopbarRef } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 const Layout = ({ children }) => {
     const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
     const { setRipple } = useContext(PrimeReactContext);
-    const topbarRef = useRef<AppTopbarRef>(null);
-    const sidebarRef = useRef<HTMLDivElement>(null);
+    const topbarRef = useRef(null);
+    const sidebarRef = useRef(null);
     const [bindMenuOutsideClickListener, unbindMenuOutsideClickListener] = useEventListener({
         type: 'click',
         listener: (event) => {
