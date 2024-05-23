@@ -6,23 +6,38 @@ import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Controller, useForm } from "react-hook-form";
-import { createRol } from "../services/rol.service";
+import { createRol, updateRol } from "../services/rol.service";
 import { classNames } from "primereact/utils";
+import { Operations } from "../../../constant/operationType";
 
-export default function RolForm({hideDialog}) {
+export default function RolForm({hideDialog, operation, rol}) {
   const {
     control,
     reset,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({ defaultValues: { nombre: '', descripcion: '' } });
 
   const onSubmit = async data => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-    await createRol(data)
-    hideDialog(true);
+    if(operation == Operations.CREATE){
+      await createRol(data)
+      hideDialog(true);
+    }
+    if(operation == Operations.UPDATE){
+      await updateRol(data, rol.id);
+      hideDialog(true);
+    }
   };
+
+  useEffect(() => {
+    if(Object.keys(rol).length > 0 && operation == Operations.UPDATE){
+      setValue('nombre', rol?.nombre);
+      setValue('descripcion', rol?.descripcion);
+    }
+  }, [])
+  
   return (
     <form
       className='p-4 flex flex-column gap-4'
