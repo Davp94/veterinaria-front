@@ -8,19 +8,24 @@ import { Password } from 'primereact/password';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { authLogin } from '../../../../services/auth.service';
-
+import useUserStore from '../../../../state-management/zustand/user.store';
+import Cookies from 'js-cookie';
 const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { token, setToken } = useUserStore();
   const login = () => {
     const loginData = {
         username: username,
         password: password
     }
     console.log("🚀 ~ login ~ loginData:", loginData)
-    authLogin(loginData).then(token => {
-      console.log("🚀 ~ authLogin ~ token:", token)
+    authLogin(loginData).then(res => {
+      console.log("🚀 ~ authLogin ~ res:", res)
+      setToken(res.data.token);
+      Cookies.set('token', res.data.token);
+      router.push('/');
     });
   } 
   return (

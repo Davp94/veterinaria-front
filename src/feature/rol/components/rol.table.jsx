@@ -14,19 +14,22 @@ import RolDetalle from './rol.detalle';
 import { deleteRol, findAllRoles } from '../services/rol.service';
 import { Operations } from '../../../constant/operationType';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import useUserStore from '../../../state-management/zustand/user.store';
 export default function RolTable() {
   const [roles, setRoles] = useState(null);
   const [rolDialog, setRolDialog] = useState(false);
   const [operation, setOperation] = useState(0);
   const [rol, setRol] = useState({});
   const [globalFilter, setGlobalFilter] = useState(null);
+  const { token, setToken } = useUserStore();
   const toast = useRef(null);
   const dt = useRef(null);
 
   useEffect(() => {
+    
     findAllRoles().then(data => {
-      console.log('🚀 ~ findAllRoles ~ data:', data.data);
-      setRoles(data.data);
+      console.log('🚀 ~ findAllRoles ~ data:', data);
+      setRoles(data);
     });
   }, []);
 

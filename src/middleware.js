@@ -1,11 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-// This function can be marked `async` if using `await` inside
 export function middleware(request) {
-  return NextResponse.redirect(new URL("/home", request.url));
+  let token = request.cookies.get('token')?.value;
+  const url = request.nextUrl.clone();
+  const path = request.nextUrl.pathname;
+  if (!token && path!= '/auth/login') {
+    url.pathname = '/auth/login';
+    return NextResponse.redirect(url);
+  }
 }
 
-// See "Matching Paths" below to learn more
+/**
+ * Add action middlware paths here to access with validation
+ */
 export const config = {
-  matcher: "/about/:path*",
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|layout/|themes/).*)'],
 };
+
