@@ -24,8 +24,7 @@ const AppMenu = () => {
         {
             label: 'Veterinaria',
             items: [
-                { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', to: '/utilities/icons' },
-                { label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: 'https://primeflex.org/', target: '_blank' }
+                { label: 'Mascotas', icon: 'pi pi-discord', to: '/mascotas' },
             ]
         },
         {

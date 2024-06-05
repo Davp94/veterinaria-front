@@ -6,29 +6,25 @@ import Cookies from 'js-cookie';
 
 const AxiosInterceptor = () => {
   const instance = axios.create();
-
-//   const getUrl = (sistema, url) => {
-//     const apis = Object.keys(process.env.APIS);
-//     if (!apis.includes(sistema)) {
-//       return 'El_sistema_no_esta_en_APIS_de_nuxtconfig';
-//     }
-//     let baseUrl = process.env.APIS[sistema];
-//     if (!baseUrl.endsWith('/')) {
-//       baseUrl = `${baseUrl}/`;
-//     }
-//     if (url.startsWith('/')) {
-//       url = url.substring(1);
-//     }
-//     return baseUrl + url;
-//   };
  
   const _http = (sistema, method, url, data) => {
     const _url = sistema;
-    let setting = {
-      method,
-      url: _url,
-      uri: url,
-    };
+    let setting = {};
+    if(method == 'getFile'){
+      setting = {
+        get,
+        url: _url,
+        uri: url,
+        responseType: 'blob'
+      };
+    }else {
+      setting = {
+        method,
+        url: _url,
+        uri: url,
+      };
+    }
+
     if (data) {
       if ((typeof data === 'object' && Object.keys(data).length) || (typeof data === 'object' && data.constructor.name === 'FormData')) {
         setting.data = data;
@@ -46,12 +42,6 @@ const AxiosInterceptor = () => {
         return Promise.resolve(data);
       })
       .catch(error=>console.log(error));
-    /*.catch(error => {
-      if (error.response) {
-        let data = error.response.data
-        return Promise.reject(data)
-      }
-    })*/
   };
 
   instance.interceptors.request.use(
@@ -67,6 +57,8 @@ const AxiosInterceptor = () => {
     }
   );
 
+  const getFile = (sistema, url, data) => _http(sistema, 'getFile', url, data);
+
   const get = (sistema, url, data) => _http(sistema, 'get', url, data);
 
   const post = (sistema, url, data) => _http(sistema, 'post', url, data);
@@ -80,6 +72,7 @@ const AxiosInterceptor = () => {
   return {
     instance,
     _http,
+    getFile,
     get,
     post,
     put,

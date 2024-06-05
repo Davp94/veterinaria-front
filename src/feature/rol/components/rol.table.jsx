@@ -15,6 +15,7 @@ import { deleteRol, findAllRoles } from '../services/rol.service';
 import { Operations } from '../../../constant/operationType';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import useUserStore from '../../../state-management/zustand/user.store';
+import Image from 'next/image';
 export default function RolTable() {
   const [roles, setRoles] = useState(null);
   const [rolDialog, setRolDialog] = useState(false);
@@ -100,7 +101,7 @@ export default function RolTable() {
 
   const imageBodyTemplate = rowData => {
     return (
-      <img
+      <Image
         src={`https://primefaces.org/cdn/primereact/images/product/${rowData.image}`}
         alt={rowData.image}
         className='shadow-2 border-round'
@@ -138,22 +139,6 @@ export default function RolTable() {
         />
       </React.Fragment>
     );
-  };
-
-  const getSeverity = product => {
-    switch (product.inventoryStatus) {
-      case 'INSTOCK':
-        return 'success';
-
-      case 'LOWSTOCK':
-        return 'warning';
-
-      case 'OUTOFSTOCK':
-        return 'danger';
-
-      default:
-        return null;
-    }
   };
 
   const header = (
