@@ -49,6 +49,7 @@ export function useMascotas() {
     mascotas,
     clasificacion,
     loadingMascotas,
+    loadingClasificacion,
     errorMascotas,
     fetchFindAllMascotas,
     fetchFindAllMascotasClasificacion,

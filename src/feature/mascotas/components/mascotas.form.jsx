@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Controller, useForm } from 'react-hook-form';
-import { createRol, updateRol } from '../services/rol.service';
-import { classNames } from 'primereact/utils';
 import { Operations } from '../../../constant/operationType';
 import InputController from '../../../common/components/ControllerInputText';
 import DropdownController from '../../../common/components/ControllerDropdown';
 import { FileUpload } from 'primereact/fileupload';
-export default function RolForm({ hideDialog, operation, rol }) {
+import { useMascotas } from '../hooks/mascotas.hook';
+import { adjuntosService } from '../../../services/adjuntos.service';
+export default function MascotasForm({ hideDialog, operation, rol }) {
   const {
     control,
     reset,
@@ -17,7 +17,7 @@ export default function RolForm({ hideDialog, operation, rol }) {
     setValue,
     formState: { errors },
   } = useForm({ defaultValues: { nombre: '', descripcion: '' } });
-
+  const { clasificacion, loadingClasificacion, fetchFindAllMascotasClasificacion } = useMascotas();
   const onSubmit = async data => {
     if (operation == Operations.CREATE) {
       await createRol(data);
@@ -30,15 +30,17 @@ export default function RolForm({ hideDialog, operation, rol }) {
   };
 
   const onUpload = (event) =>{
+    console.log('🚀 ~ onUpload ~ event:', event);
     const fomrData = new FormData();
-    fomrData.append('file', event.files[0] )
+    fomrData.append('file', event.files[0]);
+    console.log('🚀 ~ onUpload ~ fomrData:', fomrData);
+    adjuntosService(fomrData).then(res=>{
+      console.log(res);
+    })
   }
 
   useEffect(() => {
-    if (Object.keys(rol).length > 0 && operation == Operations.UPDATE) {
-      setValue('nombre', rol?.nombre);
-      setValue('descripcion', rol?.descripcion);
-    }
+    fetchFindAllMascotasClasificacion();
   }, []);
 
   return (
@@ -47,37 +49,32 @@ export default function RolForm({ hideDialog, operation, rol }) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className='grid p-fluid'>
-        <div className='field col-12 md:col-6'>
+        <div className='field col-12 md:col-12'>
           <InputController
-            name='car_monto'
+            name='nombre'
             control={control}
-            rules={rules.required()}
             errors={errors}
-            label='Monto*'
+            label='Nombre*'
           />
         </div>
-        <div>
-          <div className='card field col-12 md:col-6'>
-            <FileUpload
-              name='Imagen Mascota'
-              multiple={false}
-              accept='image/*'
-              maxFileSize={1000000}
-              customUpload={true}
-              uploadHandler={onUpload($event)}
-              emptyTemplate={<p className='m-0'>Seleccione una imagen para añadir.</p>}
-            />
-          </div>
+        <div className='card field col-12 md:col-12'>
+          <FileUpload
+            name='Imagen Mascota'
+            multiple={false}
+            accept='image/*'
+            maxFileSize={1000000}
+            customUpload={true}
+            uploadHandler={(e)=>onUpload(e)}
+            emptyTemplate={<p className='m-0'>Seleccione una imagen para añadir.</p>}
+          />
         </div>
         <div className='field col-12 md:col-6'>
           <DropdownController
-            name='mon_codigo'
+            name='clasificacion'
             control={control}
-            rules={rules.required()}
-            label='Tipo de Moneda*'
-            options={moneda}
-            optionLabel='mon_descripcion'
-            optionValue='mon_codigo'
+            label='Clasificación*'
+            options={clasificacion}
+            optionLabel='nombre'
           />
         </div>
       </div>

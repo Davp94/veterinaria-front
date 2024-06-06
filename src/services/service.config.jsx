@@ -28,6 +28,7 @@ const AxiosInterceptor = () => {
     if (data) {
       if ((typeof data === 'object' && Object.keys(data).length) || (typeof data === 'object' && data.constructor.name === 'FormData')) {
         setting.data = data;
+        console.log('🚀 ~ AxiosInterceptor ~ data:', data);
       }
     }
 

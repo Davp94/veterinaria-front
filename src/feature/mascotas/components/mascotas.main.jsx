@@ -7,10 +7,13 @@ import { findAllMascotasPaginacion } from '../services/mascotas.service';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import Image from 'next/image';
+import { Dialog } from 'primereact/dialog';
+import MascotasForm from './mascotas.form';
 export default function MascotasMain() {
   const { mascotas, loadingMascotas, fetchFindAllMascotas } = useMascotas();
   const [valueFilter, setValueFilter] = useState('');
   const [valueAscDesc, setValueAscDesc] = useState(null);
+  const [mascotasDialog, setMascotasDialog] = useState(false);
   const [lazyState, setlazyState] = useState({
     first: 0,
     rows: 2,
@@ -94,6 +97,10 @@ export default function MascotasMain() {
     getLazyData(valueFilter);
   }
 
+  const hideDialog = () => {
+    setMascotasDialog(false);
+  };
+
 
   const header = () => {
     return (
@@ -127,23 +134,36 @@ export default function MascotasMain() {
         className='card'
         title='Listado de Mascotas'
       >
-          <DataView
-            value={mascotas?.content ? mascotas.content : []}
-            lazy
-            totalRecords={mascotas?.totalElements ? mascotas.totalElements : 0}
-            first={lazyState?.first}
-            loading={loadingMascotas}
-            onPage={onPage}
-            header={header()}
-            sortField={lazyState?.sortField}
-            sortOrder={lazyState?.sortOrder}
-            rows={lazyState?.rows}
-            rowsPerPageOptions={[2, 4, 10]}
-            listTemplate={listTemplate}
-            paginator
-            emptyMessage='No existen datos registrados'
-          />
+        <Button label='Crear' icon='pi pi-plus' onClick={() => setMascotasDialog(true)}/>
+        <DataView
+          value={mascotas?.content ? mascotas.content : []}
+          lazy
+          totalRecords={mascotas?.totalElements ? mascotas.totalElements : 0}
+          first={lazyState?.first}
+          loading={loadingMascotas}
+          onPage={onPage}
+          header={header()}
+          sortField={lazyState?.sortField}
+          sortOrder={lazyState?.sortOrder}
+          rows={lazyState?.rows}
+          rowsPerPageOptions={[2, 4, 10]}
+          listTemplate={listTemplate}
+          paginator
+          emptyMessage='No existen datos registrados'
+        />
       </div>
+      <Dialog
+        visible={mascotasDialog}
+        style={{ width: '50rem' }}
+        breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+        header='Detalle Rol'
+        modal
+        className='p-fluid'
+        onHide={hideDialog}
+        blockScroll
+      >
+        <MascotasForm />
+      </Dialog>
     </>
   );
 }

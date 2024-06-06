@@ -5,5 +5,5 @@ export const findAllMascotasPaginacion = async (dataObject) => {
 }
 
 export const findAllClasificacion = async () => {
-    return await services.get(`http://localhost:8200/clasificacion`)
+    return await services.get(`http://localhost:8200/mascotas/clasificacion`)
 }
