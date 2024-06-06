@@ -5,11 +5,6 @@ import { useSearchParams } from "next/navigation";
 import MascotasIndex from "../../../feature/mascotas/mascotas.index";
 
 export default function MascotasPage() {
-  const params = useSearchParams();
-  const [count, setCount] = useState(0);
-
-  useEffect(()=>{
-  }, [count])
 
   return (
     <>

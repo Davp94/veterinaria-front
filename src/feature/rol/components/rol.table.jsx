@@ -11,7 +11,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import RolForm from './rol.form';
 import RolDetalle from './rol.detalle';
-import { deleteRol, findAllRoles } from '../services/rol.service';
+import { deleteRol, findAllRoles, reporteRoles } from '../services/rol.service';
 import { Operations } from '../../../constant/operationType';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import useUserStore from '../../../state-management/zustand/user.store';
@@ -76,6 +76,14 @@ export default function RolTable() {
     }
   };
 
+  const downloadFile = () => {
+    reporteRoles().then(res=> {
+      const url = window.URL.createObjectURL(res);
+      window.open(url);
+      window.URL.revokeObjectURL(url);
+    })
+  }
+
   const leftToolbarTemplate = () => {
     return (
       <div className='flex flex-wrap gap-2'>
@@ -95,6 +103,7 @@ export default function RolTable() {
         label='Export'
         icon='pi pi-upload'
         className='p-button-help'
+        onClick={()=>downloadFile()}
       />
     );
   };
