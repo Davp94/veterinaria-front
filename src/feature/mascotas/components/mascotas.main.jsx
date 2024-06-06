@@ -4,6 +4,7 @@ import { DataView } from 'primereact/dataview';
 import { classNames } from 'primereact/utils';
 import { useMascotas } from '../hooks/mascotas.hook';
 import { findAllMascotasPaginacion } from '../services/mascotas.service';
+import { Dropdown } from 'primereact/dropdown';
 export default function MascotasMain() {
   const { mascotas, loadingMascotas, fetchFindAllMascotas } = useMascotas();
   const [lazyState, setlazyState] = useState({
@@ -13,12 +14,15 @@ export default function MascotasMain() {
     sortField: 'nombre',
     sortOrder: 1,
   });
-  //const [mascotas, setMascotas] = useState([]);
 
   const onPage = event => {
-    console.log('🚀 ~ onPage ~ event:', event);
     setlazyState(event);
   };
+
+  const sortOptions = [
+    { label: 'Price High to Low', value: '!price' },
+    { label: 'Price Low to High', value: 'price' }
+];
 
   const getLazyData = () => {
     const bodyFiltering = {};
@@ -27,14 +31,11 @@ export default function MascotasMain() {
       (bodyFiltering.sortParam = lazyState.sortField || 'nombre'),
       (bodyFiltering.order = lazyState.sortOrder || 1);
     fetchFindAllMascotas(bodyFiltering);
-    //findAllMascotasPaginacion(bodyFiltering).then(data=>setMascotas(data))
   };
 
   useEffect(() => {
     getLazyData();
   }, [lazyState]);
-
-
 
   const itemTemplate = (mascota, index) => {
     return (
@@ -74,6 +75,10 @@ export default function MascotasMain() {
     return <div className='grid grid-nogutter'>{list}</div>;
   };
 
+  const header = () => {
+    return <Dropdown options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By Price" onChange={onSortChange} className="w-full sm:w-14rem" />;
+};
+
   return (
     <>
       <div
@@ -87,6 +92,7 @@ export default function MascotasMain() {
             first={lazyState?.first}
             loading={loadingMascotas}
             onPage={onPage}
+            header={header()}
             sortField={lazyState?.sortField}
             sortOrder={lazyState?.sortOrder}
             rows={lazyState?.rows}
